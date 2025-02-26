@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function getComputerChoice() {
+            let x = Math.floor(Math.random() * 3) + 1;
+            if (x == 1) {
+                return "rock";
+            }
+            if (x == 2) {
+                return "paper";
+            }
+            if (x == 3) {
+                return "scissors";
+            }
+        }
+
+        function getUserChoice() {
+            let x = prompt("What do you choose ? : ");
+            return x.toLowerCase();
+        }
+
+        function PlayRound() {
+            let user_choice = getUserChoice();
+            let computer_choice = getComputerChoice();
+            switch (user_choice) {
+                case "rock":
+                    if (computer_choice == "scissors") {
+                        console.log("You won :) your opponent chose scissor while you chose rock");
+                        console.log("Nigga");
+                        return 1;
+                    }
+                    if (computer_choice == "rock") {
+                        console.log("No one won :| your opponent chose rock, same thing for you");
+                        return -1;
+                    }
+                    if (computer_choice == "paper") {
+                        console.log("You lost :( your opponent chose paper, you chose rock");
+                        return 0;
+                    }
+                case "paper":
+                    if (computer_choice == "scissors") {
+                        console.log("You lost :(  your opponent chose scissor while you chose paper");
+                        return 0;
+                    }
+                    if (computer_choice == "rock") {
+                        console.log("you won :) your opponent chose rock, your chose paper");
+                        return 1;
+                    }
+                    if (computer_choice == "paper") {
+                        console.log("No one won :| your opponent chose paper, same goes for you");
+                        return -1;
+                    }
+                case "scissors":
+                    if (computer_choice == "scissors") {
+                        console.log("No one won :| your opponent chose scissors, same goes for you");
+                        return -1;
+                    }
+                    if (computer_choice == "rock") {
+                        console.log("you lost :( your opponent chose rock, your chose scissors");
+                        return 0;
+                    }
+                    if (computer_choice == "paper") {
+                        console.log("you won :) your opponent chose paper, you chose scissors");
+                        return 1;
+                    }
+                default:
+                    console.log("What ? you know you are playing Rock-paper-scissors right ?");
+
+            }
+        }
+
+        function PlayGame() {
+            let score_player = 0;
+            let score_computer = 0;
+            while (score_computer < 5 && score_player < 5) {
+                let result = PlayRound();
+                if (result === 1) {
+                    score_player = score_player + 1;
+                    console.log("The score is now :", score_player, " - ", score_computer);
+                }
+                if (result === -1) {
+                    console.log("The score remain the same");
+                }
+                if (result === 0) {
+                    score_computer = score_computer + 1;
+                    console.log("The score is now : ");
+                    console.log("The score is now :", score_player, " - ", score_computer);
+                }
+            }
+        }
+
+        PlayGame();
+
+
+    </script>
+</body>
+
+</html>

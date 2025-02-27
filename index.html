@@ -83,6 +83,36 @@
             animation-duration: 1s;
         }
 
+        .swinging {
+            animation: swing 1s ease;
+            animation-iteration-count: 1;
+        }
+
+        @keyframes swing {
+            15% {
+                transform: translateX(5px);
+            }
+
+            30% {
+                transform: translateX(-5px);
+            }
+
+            50% {
+                transform: translateX(3px);
+            }
+
+            65% {
+                transform: translateX(-3px);
+            }
+
+            80% {
+                transform: translateX(2px);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
+        }
 
 
         @keyframes scaling {
@@ -188,6 +218,8 @@
             let player_score = document.querySelector(".player_score");
             let computer_score = document.querySelector(".computer_score");
             let final = document.querySelector("#final");
+            let body = document.querySelector("body");
+            body.classList.remove("swinging");
             final.textContent = "";
             player_score.classList.remove("mouse_sur");
             computer_score.classList.remove("mouse_sur");
@@ -203,7 +235,9 @@
                     }
 
                     if (computer_choice == "rock") {
-                        return;
+                        setTimeout(() => {
+                            body.classList.add("swinging");
+                        }, 0);
                     }
 
                     if (computer_choice == "paper") {
@@ -237,15 +271,18 @@
                     }
 
                     if (computer_choice == "paper") {
-                        console.log("paper");
-                        return;
+                        setTimeout(() => {
+                            body.classList.add("swinging");
+                        }, 0);
                     }
                     break;
 
                 case "scissors":
 
                     if (computer_choice == "scissors") {
-                        return;
+                        setTimeout(() => {
+                            body.classList.add("swinging");
+                        }, 0);
                     }
 
                     if (computer_choice == "rock") {

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Rock-paper-scissors</title>
     <style>
         body {
             display: flex;
@@ -12,82 +12,119 @@
             align-items: center;
             flex-direction: column;
             height: 550px;
-            background-color:#e1bebe;
+            background-color: #e1bebe;
         }
+
 
         .buttons {
             display: flex;
             justify-content: space-around;
             width: 700px;
-
-            margin-bottom:50px;
-            margin-top:100px;
+            margin-bottom: 50px;
+            margin-top: 100px;
         }
 
-        #paper, #scissors, #rock {
-            background:#dfa927;
-            border:2px solid #dfa927;
-            width:100px;
-            height:30px;
-            border-radius:5px;
-            color:white;
-            font-weight:700;
-            animation-name:scaling;
-            animation-duration:4s;
-            animation-iteration-count:infinite;
+        #paper,
+        #scissors,
+        #rock {
+            background: #dfa927;
+            border: 2px solid #dfa927;
+            width: 100px;
+            height: 30px;
+            border-radius: 5px;
+            color: white;
+            transition: all 0.3s ease-in-out;
+            font-weight: 700;
+            animation-name: scaling;
+            animation-duration: 4s;
+            animation-iteration-count: infinite;
+        }
+
+        #paper:hover,
+        #scissors:hover,
+        #rock:hover {
+            transform: scale(1.5);
+            animation-iteration-count: 0;
         }
 
         #scissors {
-            background:	#d05228;
-            border:2px solid #d05228;
+            background: #d05228;
+            border: 2px solid #d05228;
         }
 
         #rock {
-            background:	#0b405a;
-            border:2px solid #0b405a;
+            background: #0b405a;
+            border: 2px solid #0b405a;
         }
 
         #score {
             display: flex;
             gap: 50px;
-            color:#5c46ab;
-            font-weight:700;
+            color: #5c46ab;
+            font-weight: 700;
         }
 
         p {
             text-align: center;
-            font-weight:700;
+            font-weight: 700;
+            font-size: 50px;
         }
 
         #final {
-            color:#5c46ab;
-            font-weight:700;
-            animation-name:scaling_more;
-            animation-duration:4s;
-            animation-iteration-count:infinite;
+            color: #5c46ab;
+            font-weight: 700;
+            animation-name: scaling_more;
+            animation-duration: 4s;
+            animation-iteration-count: infinite;
         }
+
+        .mouse_sur {
+            animation-name: sur;
+            animation-duration: 1s;
+        }
+
+
 
         @keyframes scaling {
             0% {
-                scale:1;
+                scale: 1;
             }
+
             50% {
-                scale:1.1;
+                scale: 1.1;
             }
+
             100% {
-                scale:1;
+                scale: 1;
             }
+        }
+
+        @keyframes sur {
+            0% {
+                scale: 1;
+            }
+
+            50% {
+                scale: 1.5;
+            }
+
+            100% {
+                scale: 1;
+            }
+
         }
 
         @keyframes scaling_more {
             0% {
-                scale:1;
+                scale: 1;
             }
+
             50% {
-                scale:1.5;
+                scale: 1.5;
             }
+
             100% {
-                scale:1;
+                scale: 1;
             }
         }
     </style>
@@ -117,8 +154,18 @@
         let computer = 0;
         let player = 0;
 
+
         buttons.forEach((button) => {
-            button.addEventListener("click", PlayRound)
+            button.addEventListener("mouseover", () => {
+                button.classList.add("mouse_sur");
+            });
+        })
+
+        buttons.forEach((button) => {
+            button.addEventListener("click", e => {
+                PlayRound(e);
+
+            })
         });
 
 
@@ -142,14 +189,17 @@
             let computer_score = document.querySelector(".computer_score");
             let final = document.querySelector("#final");
             final.textContent = "";
+            player_score.classList.remove("mouse_sur");
+            computer_score.classList.remove("mouse_sur");
             switch (user_choice) {
                 case "rock":
 
                     if (computer_choice == "scissors") {
                         player++;
                         player_score.textContent = player;
-                        console.log("You won");
-
+                        setTimeout(() => {
+                            player_score.classList.add("mouse_sur");
+                        }, 0);
                     }
 
                     if (computer_choice == "rock") {
@@ -159,8 +209,10 @@
                     if (computer_choice == "paper") {
                         computer++;
                         computer_score.textContent = computer;
+                        setTimeout(() => {
+                            computer_score.classList.add("mouse_sur");
+                        }, 0);
                     }
-                    console.log(player, " - ", computer);
                     break;
 
 
@@ -169,14 +221,23 @@
                     if (computer_choice == "scissors") {
                         computer++;
                         computer_score.textContent = computer;
+                        setTimeout(() => {
+                            computer_score.classList.add("mouse_sur");
+                        }, 0);
+                        console.log("scissors");
                     }
 
                     if (computer_choice == "rock") {
                         player++;
                         player_score.textContent = player;
+                        setTimeout(() => {
+                            player_score.classList.add("mouse_sur");
+                        }, 0);
+                        console.log("rock");
                     }
 
                     if (computer_choice == "paper") {
+                        console.log("paper");
                         return;
                     }
                     break;
@@ -190,11 +251,17 @@
                     if (computer_choice == "rock") {
                         computer++;
                         computer_score.textContent = computer;
+                        setTimeout(() => {
+                            computer_score.classList.add("mouse_sur");
+                        }, 0);
                     }
 
                     if (computer_choice == "paper") {
                         player++;
                         player_score.textContent = player;
+                        setTimeout(() => {
+                            player_score.classList.add("mouse_sur");
+                        }, 0);
                     }
                     break;
 

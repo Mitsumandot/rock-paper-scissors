@@ -5,10 +5,123 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 550px;
+            background-color:#e1bebe;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-around;
+            width: 700px;
+
+            margin-bottom:50px;
+            margin-top:100px;
+        }
+
+        #paper, #scissors, #rock {
+            background:#dfa927;
+            border:2px solid #dfa927;
+            width:100px;
+            height:30px;
+            border-radius:5px;
+            color:white;
+            font-weight:700;
+            animation-name:scaling;
+            animation-duration:4s;
+            animation-iteration-count:infinite;
+        }
+
+        #scissors {
+            background:	#d05228;
+            border:2px solid #d05228;
+        }
+
+        #rock {
+            background:	#0b405a;
+            border:2px solid #0b405a;
+        }
+
+        #score {
+            display: flex;
+            gap: 50px;
+            color:#5c46ab;
+            font-weight:700;
+        }
+
+        p {
+            text-align: center;
+            font-weight:700;
+        }
+
+        #final {
+            color:#5c46ab;
+            font-weight:700;
+            animation-name:scaling_more;
+            animation-duration:4s;
+            animation-iteration-count:infinite;
+        }
+
+        @keyframes scaling {
+            0% {
+                scale:1;
+            }
+            50% {
+                scale:1.1;
+            }
+            100% {
+                scale:1;
+            }
+        }
+
+        @keyframes scaling_more {
+            0% {
+                scale:1;
+            }
+            50% {
+                scale:1.5;
+            }
+            100% {
+                scale:1;
+            }
+        }
+    </style>
 </head>
 
 <body>
+    <div class="buttons">
+        <button id="paper">&#9995;Paper&#9995;</button>
+        <button id="scissors">&#9996;Scissors&#9996;</button>
+        <button id="rock">&#x270A;Rock&#x270A;</button>
+    </div>
+    <div id="score">
+        <div>
+            <h2>Player score</h2>
+            <p class="player_score">0</p>
+        </div>
+        <div>
+            <h2>Computer score </h2>
+            <p class="computer_score">0</p>
+        </div>
+    </div>
+    <div id="final">
+
+    </div>
     <script>
+        let buttons = document.querySelectorAll("button");
+        let computer = 0;
+        let player = 0;
+
+        buttons.forEach((button) => {
+            button.addEventListener("click", PlayRound)
+        });
+
+
         function getComputerChoice() {
             let x = Math.floor(Math.random() * 3) + 1;
             if (x == 1) {
@@ -22,82 +135,94 @@
             }
         }
 
-        function getUserChoice() {
-            let x = prompt("What do you choose ? : ");
-            return x.toLowerCase();
-        }
-
-        function PlayRound() {
-            let user_choice = getUserChoice();
+        function PlayRound(event) {
+            let user_choice = event.currentTarget.id;
             let computer_choice = getComputerChoice();
+            let player_score = document.querySelector(".player_score");
+            let computer_score = document.querySelector(".computer_score");
+            let final = document.querySelector("#final");
+            final.textContent = "";
             switch (user_choice) {
                 case "rock":
+
                     if (computer_choice == "scissors") {
-                        console.log("You won :) your opponent chose scissor while you chose rock");
-                        console.log("Nigga");
-                        return 1;
+                        player++;
+                        player_score.textContent = player;
+                        console.log("You won");
+
                     }
+
                     if (computer_choice == "rock") {
-                        console.log("No one won :| your opponent chose rock, same thing for you");
-                        return -1;
+                        return;
                     }
+
                     if (computer_choice == "paper") {
-                        console.log("You lost :( your opponent chose paper, you chose rock");
-                        return 0;
+                        computer++;
+                        computer_score.textContent = computer;
                     }
+                    console.log(player, " - ", computer);
+                    break;
+
+
                 case "paper":
+
                     if (computer_choice == "scissors") {
-                        console.log("You lost :(  your opponent chose scissor while you chose paper");
-                        return 0;
+                        computer++;
+                        computer_score.textContent = computer;
                     }
+
                     if (computer_choice == "rock") {
-                        console.log("you won :) your opponent chose rock, your chose paper");
-                        return 1;
+                        player++;
+                        player_score.textContent = player;
                     }
+
                     if (computer_choice == "paper") {
-                        console.log("No one won :| your opponent chose paper, same goes for you");
-                        return -1;
+                        return;
                     }
+                    break;
+
                 case "scissors":
+
                     if (computer_choice == "scissors") {
-                        console.log("No one won :| your opponent chose scissors, same goes for you");
-                        return -1;
+                        return;
                     }
+
                     if (computer_choice == "rock") {
-                        console.log("you lost :( your opponent chose rock, your chose scissors");
-                        return 0;
+                        computer++;
+                        computer_score.textContent = computer;
                     }
+
                     if (computer_choice == "paper") {
-                        console.log("you won :) your opponent chose paper, you chose scissors");
-                        return 1;
+                        player++;
+                        player_score.textContent = player;
                     }
+                    break;
+
+
                 default:
+
                     console.log("What ? you know you are playing Rock-paper-scissors right ?");
 
+
+            }
+            if (player == 5) {
+                final.textContent = "You Won !! the final score is " + player + " - " + computer;
+                player = 0;
+                computer = 0;
+                player_score.textContent = player;
+                computer_score.textContent = computer;
+            }
+            if (computer == 5) {
+                final.textContent = "You LOST !! the final score is " + player + " - " + computer;
+                player = 0;
+                computer = 0;
+                player_score.textContent = player;
+                computer_score.textContent = computer;
             }
         }
 
-        function PlayGame() {
-            let score_player = 0;
-            let score_computer = 0;
-            while (score_computer < 5 && score_player < 5) {
-                let result = PlayRound();
-                if (result === 1) {
-                    score_player = score_player + 1;
-                    console.log("The score is now :", score_player, " - ", score_computer);
-                }
-                if (result === -1) {
-                    console.log("The score remain the same");
-                }
-                if (result === 0) {
-                    score_computer = score_computer + 1;
-                    console.log("The score is now : ");
-                    console.log("The score is now :", score_player, " - ", score_computer);
-                }
-            }
-        }
 
-        PlayGame();
+
 
 
     </script>
